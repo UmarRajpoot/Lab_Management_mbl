@@ -2,10 +2,10 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
-const Button = ({onPress}) => {
+const Button = ({onPress, title, styles}) => {
   return (
     <TouchableOpacity
-      style={{width: '50%'}}
+      style={[styles, {width: '50%'}]}
       activeOpacity={0.6}
       onPress={onPress}>
       <LinearGradient
@@ -19,7 +19,7 @@ const Button = ({onPress}) => {
           elevation: 4,
         }}>
         <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>
-          Connect
+          {title}
         </Text>
       </LinearGradient>
     </TouchableOpacity>

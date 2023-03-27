@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "839746196092",
+    "project_id": "lab-management-84566",
+    "storage_bucket": "lab-management-84566.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839746196092:android:cdf452b30769ac3aa62ff9",
+        "android_client_info": {
+          "package_name": "com.labmgtmbl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839746196092-kr5gb2faiinbpb88tfajij8kdrum468s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.labmgtmbl",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "839746196092-hs0d4jldint5s000jorcuu670459buv8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCkiJUReAfNfd9V-Tqro1s8ZkdyT2qbQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839746196092-hs0d4jldint5s000jorcuu670459buv8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
