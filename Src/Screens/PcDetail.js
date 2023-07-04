@@ -8,7 +8,7 @@ import {io} from 'socket.io-client';
 import NetInfo from '@react-native-community/netinfo';
 
 const PcDetail = ({navigation, route}) => {
-  const {PcDetail} = route.params;
+  const {PcDetail, processes} = route.params;
 
   const [socket_instance, set_Socket_instence] = useState(null);
   const [ipAddress, setIpAddress] = useState(null);
@@ -65,7 +65,7 @@ const PcDetail = ({navigation, route}) => {
   useEffect(() => {
     if (!socket_instance) return;
     socket_instance.on('getSoftIP', soft_ip => {
-      console.log('Software Ip ' + soft_ip);
+      // console.log('Software Ip ' + soft_ip);
       setSoftIP(soft_ip.SoftIP);
     });
   }, [socket_instance]);
@@ -114,6 +114,18 @@ const PcDetail = ({navigation, route}) => {
       />
       <PowerButton onPress={() => socket_instance.emit('shutdownPC', true)} />
       <PcComponent title={'Your Pc'} SoftIP={SoftIP} />
+      <Text style={{color: 'black', fontSize: 30, marginVertical: 10}}>
+        Processes
+      </Text>
+      {processes?.map((process, index) => {
+        return (
+          <Text
+            key={index}
+            style={{color: 'black', fontSize: 20, marginTop: 10}}>
+            {index + 1} : {process}
+          </Text>
+        );
+      })}
     </Box>
   );
 };

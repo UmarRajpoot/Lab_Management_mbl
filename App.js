@@ -12,6 +12,7 @@ import RootReducer from './Src/Store/RootReducer';
 import PcDetail from './Src/Screens/PcDetail';
 import AssignmentDetail from './Src/Screens/AssignmentDetail';
 import AddAssignment from './Src/Screens/AddAssignment';
+import Quiz from './Src/Screens/Quiz';
 
 const store = createStore(RootReducer, applyMiddleware(thunk));
 
@@ -25,6 +26,7 @@ const App = () => {
         <Stack.Screen name="PcDetail" component={PcDetail} />
         <Stack.Screen name="AssignDetail" component={AssignmentDetail} />
         <Stack.Screen name="AddAssign" component={AddAssignment} />
+        <Stack.Screen name="Quiz" component={Quiz} />
       </Stack.Navigator>
     </NavigationContainer>
   );

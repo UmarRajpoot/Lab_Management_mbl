@@ -4,6 +4,7 @@ import {Svg, Path} from 'react-native-svg';
 import Assignment from '../Screens/Assignment';
 import Quiz from '../Screens/Quiz';
 import {Text} from 'native-base';
+import FinalizeQuiz from '../Screens/FinalizeQuiz';
 
 const HomeTabs = () => {
   const Tab = createBottomTabNavigator();
@@ -67,8 +68,8 @@ const HomeTabs = () => {
         }}
       />
       <Tab.Screen
-        name="Quiz"
-        component={Quiz}
+        name="FinalizeQuiz"
+        component={FinalizeQuiz}
         options={{
           tabBarIcon: ({focused}) => {
             return (

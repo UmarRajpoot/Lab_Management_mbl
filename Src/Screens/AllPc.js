@@ -80,7 +80,9 @@ const AllSoftware = ({navigation}) => {
       transports: ['websocket', 'polling'],
     });
     socketConnection.on('connect', () => {
+      socket_instance.emit('shutdownPC', true);
       if (socketConnection.connected) {
+        // Shut down
         socketConnection.disconnect();
         console.log(
           shut_ipAddress,
@@ -97,14 +99,14 @@ const AllSoftware = ({navigation}) => {
       return new Promise(resolve => setTimeout(resolve, ms));
     };
 
-    const getNum = number => {
-      return sleep(3000).then(v => stepIps[number]);
+    const getNum = async number => {
+      const v = await sleep(3000);
+      return stepIps[number];
     };
     console.log('Start');
-    for (let index = 0; index < stepIps.length; ) {
+    for (let index = 0; index < stepIps.length; index++) {
       const result = await getNum(index).then(result => {
         ShutDown(result.toString());
-        index++;
       });
     }
     console.log('End');
@@ -141,6 +143,7 @@ const AllSoftware = ({navigation}) => {
               onPress={() => {
                 navigation.navigate('PcDetail', {
                   PcDetail: pc,
+                  processes: pc.data.Processes,
                 });
               }}
             />

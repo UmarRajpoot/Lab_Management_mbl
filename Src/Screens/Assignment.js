@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Text, ZStack} from 'native-base';
-import {ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import {Badge, Box, Text, ZStack} from 'native-base';
+import {Alert, ScrollView, TextInput, TouchableOpacity} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import BackHeader from '../Components/BackHeader';
 import {Path, Svg} from 'react-native-svg';
+import storage from '@react-native-firebase/storage';
 
 const Assignment = ({navigation}) => {
   const [assignment, setAssignment] = useState([]);
@@ -27,7 +28,17 @@ const Assignment = ({navigation}) => {
     GetAllAssignments();
   }, []);
 
-  const deleteAssignment = async assignID => {
+  const deleteAssignment = async (assignID, urlRef) => {
+    // console.log('File and Info will delete');
+    const filedeleted = await storage()
+      .refFromURL(urlRef)
+      .delete()
+      .then(() => {
+        console.log('File Deleted');
+      })
+      .catch(error => {
+        console.log(error);
+      });
     await firestore()
       .collection('Assignments')
       .doc(assignID)
@@ -47,8 +58,8 @@ const Assignment = ({navigation}) => {
           }}
         />
       </Box>
-      <Text color={'gray.600'} fontSize={'2xl'} p={'2'}>
-        Assignments
+      <Text color={'gray.600'} fontSize={'xl'} p={'2'}>
+        Uploaded Assignments
       </Text>
       <TouchableOpacity
         style={{position: 'absolute', zIndex: 10, bottom: 20, right: 20}}
@@ -83,19 +94,58 @@ const Assignment = ({navigation}) => {
             <TouchableOpacity
               key={assign.id}
               activeOpacity={0.8}
-              onLongPress={() => deleteAssignment(assign.id)}
-              onPress={() =>
-                navigation.navigate('AssignDetail', {
-                  assignDetail: assign,
-                })
+              onLongPress={() =>
+                // deleteAssignment(assign.id, assign.data.assignmentURL)
+                {
+                  Alert.alert(
+                    'Want to Delete.',
+                    'Are you sure want to delete Assignment.',
+                    [
+                      {
+                        text: 'No',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Yes',
+                        onPress: () =>
+                          deleteAssignment(
+                            assign.id,
+                            assign.data.assignmentURL,
+                          ),
+                      },
+                    ],
+                  );
+                }
               }>
-              <Box bgColor={'gray.500'} p={'3'} rounded={'2xl'}>
-                <Text color={'gray.100'} fontSize={'xl'}>
-                  Assignment {index + 1}
+              <Box
+                w={'95%'}
+                my={'3'}
+                bgColor={'gray.300'}
+                rounded={'2xl'}
+                alignSelf={'center'}
+                p={'3'}
+                flexDirection={'row'}
+                alignItems={'center'}>
+                <Svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill={'gray'}>
+                  <Path d="M19.937 8.68c-.011-.032-.02-.063-.033-.094a.997.997 0 0 0-.196-.293l-6-6a.997.997 0 0 0-.293-.196c-.03-.014-.062-.022-.094-.033a.991.991 0 0 0-.259-.051C13.04 2.011 13.021 2 13 2H6c-1.103 0-2 .897-2 2v16c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V9c0-.021-.011-.04-.013-.062a.99.99 0 0 0-.05-.258zM16.586 8H14V5.414L16.586 8zM6 20V4h6v5a1 1 0 0 0 1 1h5l.002 10H6z"></Path>
+                </Svg>
+                <Text fontSize={'lg'} color={'gray.900'} p={'3'}>
+                  {assign.data.assignmentName}
                 </Text>
-                <Text color={'gray.300'} fontSize={'md'} numberOfLines={3}>
-                  {assign.data.text}
-                </Text>
+                <Badge
+                  rounded={'2xl'}
+                  colorScheme={'green'}
+                  position={'absolute'}
+                  top={0}
+                  right={0}>
+                  Uploaded
+                </Badge>
               </Box>
             </TouchableOpacity>
           );
